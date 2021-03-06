@@ -11,6 +11,7 @@
     </head>
     
     <body>
+        {% csrf_token %}
         <nav id="topbar">
             <div>
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
@@ -22,7 +23,7 @@
             <div id="menu">
                 <span><a href="index.html">INICIO</a></span>
                 <span><a href="misturnos.html">MIS TURNOS</a></span>
-                <span><a href="solicitarturno.html">SOLICITAR TURNO</a></span>
+                <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
                 <span class="activo"><a href="miperfil.html">MI PERFIL</a></span>
                 <span><a href="login.html">Cerrar Sesion</a></span>
             </div>

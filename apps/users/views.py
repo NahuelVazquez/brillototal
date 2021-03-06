@@ -11,7 +11,7 @@ from apps.users.models import Cliente
 class LoginView(View):
 
     template_name = "users/login.html"
-    template_mis_turnos = "users/misturnos.html"
+    
    
     
     def get(self, request, *args, **kwargs):
@@ -57,7 +57,7 @@ class MisTurnosView(View):
         # to do SIEMPRE TIRA USUARIO "MARCO"
     
     def post(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        return HttpResponseRedirect(reverse('modificarturno'))
 
 #Clase para solicitar un nuevo turno
 class SolicitarTurnoView(View):
@@ -106,3 +106,5 @@ class ModificarTurnoView(View):
         fecha = request.POST.get('fecha')
         horario = request.POST.get('''# Que va acá''')
         return HttpResponseRedirect(reverse('modificarturno'))
+    
+    

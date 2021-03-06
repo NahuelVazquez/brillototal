@@ -10,5 +10,5 @@ urlpatterns = [
     path('registrar/', RegistrarView.as_view(), name='registrar'),
     path('solicitarturno/', SolicitarTurnoView.as_view(), name="solcitarturno"),
     path('miperfil/', MiPerfilView.as_view(), name='miperfil'),
-     path('modificarturno/', ModificarTurnoView.as_view(), name="modificarturno"),
+    path('modificarturno/', ModificarTurnoView.as_view(), name="modificarturno"),
 ]

@@ -15,7 +15,7 @@
     <body>
         <nav id="topbar">
             <div>
-                {{ user }}
+                {{ username }}
             </div>
             <div>
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
@@ -50,7 +50,7 @@
                     <td>19:00 - 20:00</td>
                     <td id="opciones-turno">
                         <button class="cancel-edit" type="submit"><span class="icon-bin"></span></button>
-                        <a href="modificarturno.html"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
+                        <a href="{% url 'modificarturno' %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
                     </td>
                 </tr>
             </table>
