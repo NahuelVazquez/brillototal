@@ -26,7 +26,7 @@ class LoginView(View):
             
         return render(request, self.template_name, context={'error':'USER Y/O PASSWORD INCORRECTO'})
            
-
+#Clase para el registro del usuario
 class RegistrarView(View):
     
     template_name = "users/registrar.html"
@@ -46,14 +46,63 @@ class RegistrarView(View):
         cliente = Cliente.objects.create(telefono=telefono, usuario=user)
         request.user=user
         return HttpResponseRedirect(reverse('misturnos'))
-        # to do SIEMPRE TIRA USUARIO "MARCO"
-
+        
+#Clase para visualizar los turnos
 class MisTurnosView(View):
     
     template_name = "users/misturnos.html"
     
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, context={'user': request.user.username})
+        # to do SIEMPRE TIRA USUARIO "MARCO"
     
     def post(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+#Clase para solicitar un nuevo turno
+class SolicitarTurnoView(View):
+    
+    template_name = "users/solicitarturno.html"
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'user': request.user.username})
+    
+    #FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        vehiculo = request.POST.get('''# Que va acá''' ) 
+        matricula = request.POST.get('matricula')
+        metodo_pago = request.POST.get('''# Que va acá''')
+        fecha = request.POST.get('fecha')
+        horario = request.POST.get('''# Que va acá''')
+        return HttpResponseRedirect(reverse('solicitarturno'))
+
+#Clase para ver el perfil de usuario   
+# falta implementar como se muestran los valores
+class MiPerfilView(View):
+    template_name = "users/miperfil.html"
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'user': request.user.username})
+        # to do SIEMPRE TIRA USUARIO "MARCO"
+    
+    def post(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('miperfil'))
+
+#Clase para modificar los turnos
+class ModificarTurnoView(View):
+    
+    template_name = "users/modificarturno.html"
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'user': request.user.username})
+    
+    #FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        vehiculo = request.POST.get('''# Que va acá''' ) 
+        matricula = request.POST.get('matricula')
+        metodo_pago = request.POST.get('''# Que va acá''')
+        fecha = request.POST.get('fecha')
+        horario = request.POST.get('''# Que va acá''')
+        return HttpResponseRedirect(reverse('modificarturno'))
