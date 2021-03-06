@@ -21,13 +21,18 @@
              </header>
         <div id="formulario">
             <form method="POST">
-                <label>Nombre y Apellido:</label></br>
-                <input type="text" name="nombre" placeholder="nombre y apellido" required></br>
+                {% csrf_token %}
+                <label>Nombre:</label></br>
+                <input type="text" name="nombre" placeholder="nombre" required></br>
+                <label>Apellido:</label></br>
+                <input type="text" name="apellido" placeholder="apellido" required></br>
                 <label>Teléfono:</label></br>
                 <input type="text" name="telefono" placeholder="teléfono" required></br>
                 <label>E-mail:</label></br>
                 <input type="email" name="email" placeholder="e-mail" required>
                 </br>
+                <label>Usuario:</label></br>
+                <input type="text" name="usuario" placeholder="usuario" required></br>
                 <label>Contraseña:</label></br>
                 <input type="password" name="password" placeholder="contraseña" required>
                 </br>
@@ -46,3 +51,5 @@
     </footer>
     
 </html>
+
+
