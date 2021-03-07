@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <title>Registrarse</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
+    </head>
+    
+    <body>
+        <nav id="topbar">
+            <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
+            <span id="brillo-total">Brillo Total</span>
+        </nav>  
+        <div id="contenedor-registro">
+            <header>
+                <h3>Regístrate</h3>
+             </header>
+        <div id="formulario">
+            <form method="POST">
+                {% csrf_token %}
+                <label>Nombre:</label></br>
+                <input type="text" name="nombre" placeholder="nombre" required></br>
+                <label>Apellido:</label></br>
+                <input type="text" name="apellido" placeholder="apellido" required></br>
+                <label>Teléfono:</label></br>
+                <input type="text" name="telefono" placeholder="teléfono" required></br>
+                <label>E-mail:</label></br>
+                <input type="email" name="email" placeholder="e-mail" required>
+                </br>
+                <label>Usuario:</label></br>
+                <input type="text" name="usuario" placeholder="usuario" required></br>
+                <label>Contraseña:</label></br>
+                <input type="password" name="password" placeholder="contraseña" required>
+                </br>
+                <div id="boton">
+                    <a class="btn-cancell" href="login.html">Cancelar</a>
+                    <input class="boton-enviar" type="submit" name="ingresar" value="Aceptar">
+                </div>
+                
+            </div>
+        </div>
+    </body>
+    <footer>
+        <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
+        </div>
+        
+    </footer>
+    
+</html>
+
+

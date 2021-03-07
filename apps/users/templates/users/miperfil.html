@@ -1,0 +1,24 @@
+{% extends "users/base.html" %}
+{% block misturnos %}
+{% endblock misturnos %}
+{% block content %}
+<div id="formulario">
+    <form method="POST">
+        <label>Nombre y Apellido:</label></br>
+        <input type="text" name="nombre" placeholder="nombre y apellido" required></br>
+        <label>Teléfono:</label></br>
+        <input type="text" name="telefono" placeholder="teléfono" required></br>
+        <label>E-mail:</label></br>
+        <input type="email" name="email" placeholder="e-mail" required>
+        </br>
+        <label>Nueva contraseña:</label></br>
+        <input type="password" name="password" placeholder="contraseña" required>
+        </br>
+        <div id="boton">
+            <a class="btn-cancell" href="index.html">Cancelar</a>
+            <input class="boton-enviar" type="submit" name="ingresar" value="Modificar">
+        </div>
+        
+    </form>
+</div>
+{% endblock content %}

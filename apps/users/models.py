@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 
 
 TIPO_LAVADO = (
-       ('interior', 'Interior' ),
-       ('exterior', 'Exterior' ),
-       ('completo', 'Completo'),
+       ('interior', 'Interior' ), #400
+       ('exterior', 'Exterior' ), #300
+       ('completo', 'Completo'), #600
    )
 
 TIPO_VEHICULO = (
-       ('auto', 'Auto' ),
-       ('camioneta', 'Camioneta' ),
-       ('moto', 'Moto'),
+       ('auto', 'Auto' ), # 1
+       ('camioneta', 'Camioneta' ), # 1.25
+       ('moto', 'Moto'), # .75
    )
 TIPO_PAGO = (
        ('efectivo', 'Efectivo' ),
@@ -30,7 +30,7 @@ class Cliente(models.Model):
 
 class Lavado(models.Model):
     tipo_lavado = models.CharField(max_length=8, choices=TIPO_LAVADO)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=2) 
 
 
 class Vehiculo(models.Model):
@@ -42,7 +42,8 @@ class Vehiculo(models.Model):
 
 
 class Turno(models.Model):
-    fecha = models.DateTimeField
+    fecha = models.DateTimeField() #AQUI DEBERIA ELEGIR EL USUARIO DIA Y HORA (Lun a sabado // 8 a 19 hs // 1 hora por turno.)
     tipo_pago = models.CharField(max_length=8, choices=TIPO_PAGO)
     lavado = models.ForeignKey(Lavado, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+

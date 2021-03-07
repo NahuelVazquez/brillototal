@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Iniciar Sesion</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
+    </head>
+    
+        <body>
+            <nav id="topbar">
+                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
+                <span id="brillo-total">Brillo Total</span>
+            </nav>  
+            
+                
+            <div id="contenedor">
+                
+                <header>
+                   <h3>Iniciar Sesión</h3>
+                </header>
+                <div id="formulario">
+                    {% if error %}
+                    <p style='color:red'>
+                        {{ error }}
+                    </p> 
+                    {% endif %}
+                    <form method="post">   
+                        {% csrf_token %}
+                        <label>Usuario:</label></br>
+                        <input type="text" name="username" placeholder="usuario">
+                        </br>
+                        <label>Contraseña:</label></br>
+                        <input type="password" name="password" placeholder="contraseña" required>
+                        </br>
+                        <div id="boton">
+                            <input class="boton-enviar" type="submit" name="ingresar" value="Ingresar" onclick="location.href='index.html'">
+                        </div>
+                        <div id="registrar">
+                            <h3>¿No tenés cuenta?</h3></br>
+                            
+                            <a id="boton-registrarse" href="{% url 'registrar' %}">Registrarse</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+        
+        <footer>
+            <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
+            </div>
+            
+        </footer>
+
+</html>
+
