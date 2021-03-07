@@ -33,7 +33,7 @@
                 <h3>Solicitar turno: </h3>
                 <form method="POST">
                     <label>Tipo de Vehiculo:</label></br>
-                    <select>
+                    <select name="vehiculo">
                         <option selected disabled>Seleccione tipo de vehiculo</option>
                         <option>Auto</option>
                         <option>Camioneta</option>
@@ -42,13 +42,13 @@
                     <label>Matricula:</label></br>
                     <input type="text" name="matricula" placeholder="matricula" required></br>
                     <label>Metodo de pago:</label></br>
-                    <input type="text" name="email" placeholder="metodo de pago" required>
+                    <input type="text" name="pago" placeholder="metodo de pago" required>
                     </br>
                     <label>Fecha:</label></br>
                     <input type="date" name="fecha"  required>
                     </br>
                     <label>Horario:</label></br>
-                    <input>
+                    <input type="time" name="horario">
                     </br>
 
                     <div id="boton">

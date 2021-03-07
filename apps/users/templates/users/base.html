@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+    {% block header %}
+    <head>
+        <meta charset="utf-8">
+        
+        <title>Inicio</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
+    </head>
+    {% endblock header %}
+    <body>
+        {% block menu %}
+        <nav id="topbar">
+            <div>
+                {{ username }}
+            </div>
+            <div>
+                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
+            </div>
+            <div>
+                <span id="brillo-total">Brillo Total</span>
+            </div>
+            
+            <div id="menu">
+                <span><a href="{% url 'login' %}">INICIO</a></span>
+                {% if user %}
+                <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
+                <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+                <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
+                <span><a href="cerrarsion-html">Cerrar Sesion</a></span>
+                {% endif %}
+            </div>
+                        
+        </nav> 
+        {% endblock menu %}
+        {% block misturnos %}
+        <div class="contenedor-inicio">
+            <a href="{% url 'misturnos' %}" id="misturnos" class="inicio-item">
+                <!-- <div id="misturnos" class="inicio-item"> -->
+                    <div>
+                        <img src="../static/imagenes/impatient (1).png" style="width: 200px;">
+                        <h3>MIS TURNOS</h3>
+                    </div>
+                    
+                <!-- </div> -->
+            </a>
+            <a href="{% url 'solicitarturno' %}"  class="inicio-item">
+            <!-- <div class="inicio-item"> -->
+                <div>
+                    <img src="../static/imagenes/calendar.png" style="width: 200px;">
+                    <h3>SOLICITAR TURNO</h3>
+                </div>
+            <!-- </div> -->
+            </a>
+        </div>
+        {% endblock misturnos %}
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>
