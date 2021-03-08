@@ -15,7 +15,7 @@
         {% block menu %}
         <nav id="topbar">
             <div>
-                {{ username }}
+                {{ user.username }}
             </div>
             <div>
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
@@ -25,12 +25,12 @@
             </div>
             
             <div id="menu">
-                <span><a href="{% url 'login' %}">INICIO</a></span>
-                {% if user %}
+                <span><a href="{% url 'index' %}">INICIO</a></span>
+                {% if users %}
                 <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
                 <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
                 <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
-                <span><a href="cerrarsion-html">Cerrar Sesion</a></span>
+                <span><a href="cerrarsion.html">Cerrar Sesion</a></span>
                 {% endif %}
             </div>
                         

@@ -15,7 +15,7 @@
     <body>
         <nav id="topbar">
             <div>
-                {{ username }}
+                {{ user.username }}
             </div>
             <div>
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
@@ -25,11 +25,11 @@
             </div>
             
             <div id="menu">
-                <span><a href="{% url 'login' %}">INICIO</a></span>
-                <span class="activo"><a href="misturnos.html">MIS TURNOS</a></span>
-                <span><a href="solicitarturno.html">SOLICITAR TURNO</a></span>
-                <span><a href="miperfil.html">MI PERFIL</a></span>
-                <span><a href="login.html">Cerrar Sesion</a></span>
+                <span><a href="{% url 'index' %}">INICIO</a></span>
+                <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
+                <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+                <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
+                <span><a href="{% url 'login' %}">Cerrar Sesion</a></span>
             </div>
                         
         </nav> 
@@ -38,21 +38,25 @@
             <table class="table table-hover">
                 <tr>
                     <th>Tipo de Vehiculo</th>
+                    <th>Lavado</th>
                     <th>Patente</th>
                     <th>Fecha</th>
                     <th>Horario</th>
                     <th class="botones-turno">Cancelar/Modificar</th>
                 </tr>
+                {% for turno in turnos %}
                 <tr>
-                    <td>Auto</td>
-                    <td>ABC123</td>
-                    <td>23/05/21</td>
-                    <td>19:00 - 20:00</td>
+                    <td>{{ turno.vehiculo.tipo_vehiculo }}</td>
+                    <td>{{ turno.lavado.tipo_lavado }}</td>
+                    <td>{{ turno.vehiculo.matricula }}</td>
+                    <td>{{ turno.fecha }}</td>
+                    <td>{{ turno.horario }}</td>
                     <td id="opciones-turno">
                         <button class="cancel-edit" type="submit"><span class="icon-bin"></span></button>
                         <a href="{% url 'modificarturno' %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
-                    </td>
+                    </td>    
                 </tr>
+                {% endfor %}
             </table>
         </div>
     </body>

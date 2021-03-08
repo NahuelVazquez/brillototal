@@ -13,6 +13,7 @@
     <body>
         <nav id="topbar">
             <div>
+                {{ user.username }}
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
             </div>
             <div>
@@ -20,13 +21,13 @@
             </div>
             
             <div id="miperfil">
-                <a href="miperfil.html">MI PERFIL</a>
-                <a href="login.html">Cerrar Sesion</a>
+                <a href="{% url 'miperfil' %}">MI PERFIL</a>
+                <a href="{% url 'login' %}">Cerrar Sesion</a>
             </div>
         </nav> 
 
         <div class="contenedor-inicio">
-            <a href="misturnos.html" id="misturnos" class="inicio-item">
+            <a href="{% url 'misturnos' %}" id="misturnos" class="inicio-item">
                 <!-- <div id="misturnos" class="inicio-item"> -->
                     <div>
                         <img src="../static/imagenes/impatient (1).png" style="width: 200px;">
@@ -35,7 +36,7 @@
                     
                 <!-- </div> -->
             </a>
-            <a href="solicitarturno.html"  class="inicio-item">
+            <a href="{% url 'solicitarturno' %}"  class="inicio-item">
             <!-- <div class="inicio-item"> -->
                 <div>
                     <img src="../static/imagenes/calendar.png" style="width: 200px;">

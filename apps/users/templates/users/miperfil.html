@@ -2,8 +2,15 @@
 {% block misturnos %}
 {% endblock misturnos %}
 {% block content %}
-<div id="formulario">
+<div id="contenedor-registro">
+    <header>
+        <h3>Mis datos</h3>
+        <a>Eliminar cuenta</a>
+        
+     </header>
+    <div id="formulario">
     <form method="POST">
+        {% csrf_token %}
         <label>Nombre y Apellido:</label></br>
         <input type="text" name="nombre" placeholder="nombre y apellido" required></br>
         <label>Teléfono:</label></br>
@@ -15,10 +22,11 @@
         <input type="password" name="password" placeholder="contraseña" required>
         </br>
         <div id="boton">
-            <a class="btn-cancell" href="index.html">Cancelar</a>
+            <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
             <input class="boton-enviar" type="submit" name="ingresar" value="Modificar">
         </div>
         
     </form>
+</div>
 </div>
 {% endblock content %}

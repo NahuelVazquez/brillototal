@@ -4,7 +4,8 @@ from django.shortcuts import render, reverse
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import transaction
-from apps.users.models import Cliente
+from apps.users.models import *
+from datetime import datetime
 
 
 # Clase para el login
@@ -20,7 +21,7 @@ class LoginView(View):
             'username'), password=request.POST.get('password'))
         if user:
             request.user = user
-            return HttpResponseRedirect(reverse('misturnos'))
+            return HttpResponseRedirect(reverse('index'))
 
         return render(request, self.template_name, context={'error': 'USER Y/O PASSWORD INCORRECTO'})
 
@@ -46,7 +47,7 @@ class RegistrarView(View):
         telefono = int(request.POST.get('telefono'))
         cliente = Cliente.objects.create(telefono=telefono, usuario=user)
         request.user = user
-        return HttpResponseRedirect(reverse('misturnos'))
+        return HttpResponseRedirect(reverse('index'))
 
 # Clase para visualizar los turnos
 
@@ -56,7 +57,9 @@ class MisTurnosView(View):
     template_name = "users/misturnos.html"
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'user': request.user.username})
+        turnos = Turno.objects.filter(cliente__usuario=request.user)
+        return render(request, self.template_name,
+                      context={'user': request.user.username, 'turnos': turnos})
         # to do SIEMPRE TIRA USUARIO "MARCO"
 
     def post(self, request, *args, **kwargs):
@@ -70,17 +73,24 @@ class SolicitarTurnoView(View):
     template_name = "users/solicitarturno.html"
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'user': request.user.username})
+
+        return render(request, self.template_name,
+                      context={'user': request.user.username, 'tipos_de_lavados': TIPO_LAVADO,
+                               'tipo_de_vehiculos': TIPO_VEHICULO})
 
     # FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         vehiculo = request.POST.get('vehiculo')
+        lavado = request.POST.get('lavado')
         matricula = request.POST.get('matricula')
-        metodo_pago = request.POST.get('pago')
         fecha = request.POST.get('fecha')
         horario = request.POST.get('horario')
-        return HttpResponseRedirect(reverse('solicitarturno'))
+        lavado_object = Lavado.objects.get(tipo_lavado=lavado)
+        vehiculo_object = Vehiculo.objects.get(tipo_vehiculo=vehiculo)
+        #turno = Turno.objects.create(
+        #    lavado=lavado_object, cliente__usuario=request.user, fecha=datetime.strptime(fecha, '%Y-%m-%d'), vehiculo=vehiculo_object)
+        return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para ver el perfil de usuario
 # falta implementar como se muestran los valores
@@ -107,11 +117,25 @@ class ModificarTurnoView(View):
         return render(request, self.template_name, context={'user': request.user.username})
 
     # FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
-    @transaction.atomic
+    @ transaction.atomic
     def post(self, request, *args, **kwargs):
-        vehiculo = request.POST.get('''# Que va acá''')
+        vehiculo = request.POST.get('vehiculo')
+        lavado = request.POST.get('lavado')
         matricula = request.POST.get('matricula')
-        metodo_pago = request.POST.get('''# Que va acá''')
         fecha = request.POST.get('fecha')
-        horario = request.POST.get('''# Que va acá''')
-        return HttpResponseRedirect(reverse('modificarturno'))
+        horario = request.POST.get('horario')
+        return HttpResponseRedirect(reverse('misturnos'))
+
+# Clase para visualizar los turnos
+
+
+class IndexView(View):
+
+    template_name = "users/index.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'user': request.user.username})
+        # to do SIEMPRE TIRA USUARIO "MARCO"
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('index'))

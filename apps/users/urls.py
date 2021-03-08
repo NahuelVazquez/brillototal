@@ -12,4 +12,6 @@ urlpatterns = [
     path('solicitarturno/', SolicitarTurnoView.as_view(), name="solicitarturno"),
     path('miperfil/', MiPerfilView.as_view(), name='miperfil'),
     path('modificarturno/', ModificarTurnoView.as_view(), name="modificarturno"),
+    path('index/', IndexView.as_view(), name="index"),
+
 ]

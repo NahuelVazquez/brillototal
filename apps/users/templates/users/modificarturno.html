@@ -20,11 +20,11 @@
             </div>
             
             <div id="menu">
-                <span><a href="index.html">INICIO</a></span>
-                <span class="activo"><a href="misturnos.html">MIS TURNOS</a></span>
-                <span ><a href="solicitarturno.html">SOLICITAR TURNO</a></span>
-                <span><a href="miperfil.html">MI PERFIL</a></span>
-                <span><a href="login.html">Cerrar Sesion</a></span>
+                <span><a href="{% url 'index' %}">INICIO</a></span>
+                <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
+                <span ><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+                <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
+                <span><a href="{% url 'login' %}">Cerrar Sesion</a></span>
             </div>
                         
         </nav> 
@@ -39,11 +39,15 @@
                         <option>Camioneta</option>
                         <option>Moto</option>
                     </select></br>
+                    <label>Tipo de Lavado</label></br>
+                    <select name="lavado">
+                        <option selected disabled>Seleccione tipo de lavado</option>
+                        <option>Interior</option>
+                        <option>Exterior</option>
+                        <option>Completo</option>
+                    </select></br>
                     <label>Matricula:</label></br>
                     <input type="text" name="matricula" placeholder="matricula" ></br>
-                    <label>Metodo de pago:</label></br>
-                    <input type="text" name="email" placeholder="metodo de pago" >
-                    </br>
                     <label>Fecha:</label></br>
                     <input type="date" name="fecha"  disabled>
                     </br>
@@ -52,7 +56,7 @@
                     </br>
 
                     <div id="boton">
-                        <a class="btn-cancell" href="misturnos.html">Cancelar</a>
+                        <a class="btn-cancell" href="{% url 'misturnos' %}">Cancelar</a>
                         <input class="boton-enviar" type="submit" name="turno" value="Aceptar">
                     </div>
                     

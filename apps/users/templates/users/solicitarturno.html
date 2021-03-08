@@ -20,11 +20,11 @@
             </div>
             
             <div id="menu">
-                <span><a href="index.html">INICIO</a></span>
-                <span><a href="misturnos.html">MIS TURNOS</a></span>
-                <span class="activo"><a href="solicitarturno.html">SOLICITAR TURNO</a></span>
-                <span><a href="miperfil.html">MI PERFIL</a></span>
-                <span><a href="login.html">Cerrar Sesion</a></span>
+                <span><a href="{% url 'index' %}">INICIO</a></span>
+                <span><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
+                <span class="activo"><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+                <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
+                <span><a href="{% url 'login' %}">Cerrar Sesion</a></span>
             </div>
                         
         </nav> 
@@ -32,18 +32,23 @@
             <div id="formulario">
                 <h3>Solicitar turno: </h3>
                 <form method="POST">
+                    {% csrf_token %}
                     <label>Tipo de Vehiculo:</label></br>
                     <select name="vehiculo">
                         <option selected disabled>Seleccione tipo de vehiculo</option>
-                        <option>Auto</option>
-                        <option>Camioneta</option>
-                        <option>Moto</option>
+                        {% for key, value in tipo_de_vehiculos %}
+                        <option value={{key}}>{{value}}</option>
+                        {% endfor %}
+                    </select></br>
+                    <label>Tipo de Lavado</label></br>
+                    <select name="lavado">
+                        <option selected disabled>Seleccione tipo de lavado</option>
+                        {% for key, value in tipos_de_lavados %}
+                        <option value={{key}}>{{value}}</option>
+                        {% endfor %}
                     </select></br>
                     <label>Matricula:</label></br>
                     <input type="text" name="matricula" placeholder="matricula" required></br>
-                    <label>Metodo de pago:</label></br>
-                    <input type="text" name="pago" placeholder="metodo de pago" required>
-                    </br>
                     <label>Fecha:</label></br>
                     <input type="date" name="fecha"  required>
                     </br>
@@ -52,7 +57,7 @@
                     </br>
 
                     <div id="boton">
-                        <a class="btn-cancell" href="index.html">Cancelar</a>
+                        <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
                         <input class="boton-enviar" type="submit" name="turno" value="Aceptar">
                     </div>
                     
