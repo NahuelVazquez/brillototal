@@ -2,6 +2,8 @@
 
 <html>
     <head>
+        <link rel="shortcut icon" href="favicon.ico">
+<link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Solicitar Turno</title>
@@ -12,10 +14,9 @@
     
     <body>
         <nav id="topbar">
-            <div>
+            <div id="index-logos">
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
-            </div>
-            <div>
+            
                 <span id="brillo-total">Brillo Total</span>
             </div>
             
@@ -33,13 +34,8 @@
                 <h3>Solicitar turno: </h3>
                 <form method="POST">
                     {% csrf_token %}
-                    <label>Tipo de Vehiculo:</label></br>
-                    <select name="vehiculo">
-                        <option selected disabled>Seleccione tipo de vehiculo</option>
-                        {% for key, value in tipo_de_vehiculos %}
-                        <option value={{key}}>{{value}}</option>
-                        {% endfor %}
-                    </select></br>
+
+ 
                     <label>Tipo de Lavado</label></br>
                     <select name="lavado">
                         <option selected disabled>Seleccione tipo de lavado</option>
@@ -49,6 +45,21 @@
                     </select></br>
                     <label>Matricula:</label></br>
                     <input type="text" name="matricula" placeholder="matricula" required></br>
+                    <div class="ocultar"  style="display:none">
+                    <label>Tipo de Vehiculo:</label></br>
+                    <select name="vehiculo">
+                        <option selected disabled>Seleccione tipo de vehiculo</option>
+                        {% for key, value in tipo_de_vehiculos %}
+                        <option value={{key}}>{{value}}</option>
+                        {% endfor %}
+                    </select></br>
+                    <label>Marca:</label></br>
+                    <input type="text" name="marca" placeholder="marca" required>
+                    </br>
+                    <label>Modelo:</label></br>
+                    <input type="text" name="modelo" placeholder="modelo"  required>
+                    </br>
+                    </div>
                     <label>Fecha:</label></br>
                     <input type="date" name="fecha"  required>
                     </br>
@@ -70,6 +81,6 @@
         </div>
         
     </footer>
-
+<script></script>
 </html>
     

@@ -1,28 +1,20 @@
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <meta charset="utf-8">
-        
-        <title>Inicio</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
-    </head>
-    
-    <body>
+{% extends "users/base.html" %}
+{% block menu %}
+{% endblock menu %}
+{% block content %}
         <nav id="topbar">
-            <div>
-                {{ user.username }}
-                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
-            </div>
-            <div>
+            <div id="index-logos">
+                {{ user.username }} 
+                <!-- no muestra -->
+            
+                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px; margin-left:5px;">
+            
                 <span id="brillo-total">Brillo Total</span>
             </div>
             
             <div id="miperfil">
                 <a href="{% url 'miperfil' %}">MI PERFIL</a>
-                <a href="{% url 'login' %}">Cerrar Sesion</a>
+                <a href="{% url 'logout' %}">Cerrar Sesion</a>
             </div>
         </nav> 
 
@@ -45,16 +37,6 @@
             <!-- </div> -->
             </a>
         </div>
-        
-
-
-
-    </body>
-        
-    <footer>
-        <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
-        </div>
-        
-    </footer>
+        {% endblock content %}     
 
 </html>
