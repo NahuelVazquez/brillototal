@@ -29,7 +29,7 @@
                         {% endfor %}
                     </select></br>
                     <label>Matricula:</label></br>
-                    <input type="text" name="matricula" placeholder="matricula" required></br>
+                    <input type="text" name="matricula" id="matricula" placeholder="matricula" required onblur="comprobarMatricula()"></br>
                     
                     <div class="ocultar"  style="display:none">
                     <label>Tipo de Vehiculo:</label></br>
@@ -62,4 +62,17 @@
                 </form>
             </div>
         </div>
+        <script type="text/javascript"> 
+        function comprobarMatricula() {
+            $.ajax({
+                method: "POST",
+                url: "{% url 'check_matricula' %}",
+                data: {matricula: $('#matricula').val()}
+                }).done(function(response) {
+                    if (response=="No existe"){
+                        $(".ocultar").show("slow")
+                    }
+            });
+        }
+        </script>
         {% endblock content %}

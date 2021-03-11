@@ -67,6 +67,23 @@ class RegistrarView(View):
         request.user = user
         return HttpResponseRedirect(reverse('index'))
 
+class MiPerfilView(View):
+
+    template_name = "users/miperfil.html"
+    
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'user': request.user.username})
+
+    def post(self, request, *args, **kwargs): 
+        usuario = request.POST.get('usuario')
+        usuario = User.objets.get(user=request.user)
+        return HttpResponseRedirect(reverse('index'))
+
+    def delete(request, usuario):
+        user.delete()
+        return render(request, self.template_name, {'user':usuario})
+
 # Clase para visualizar los turnos
 
 
@@ -99,32 +116,45 @@ class SolicitarTurnoView(View):
     # FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        vehiculo = request.POST.get('vehiculo')
         lavado = request.POST.get('lavado')
         matricula = request.POST.get('matricula')
         fecha = request.POST.get('fecha')+'-'+request.POST.get('horario')
         horario = request.POST.get('horario')
         lavado_object = Lavado.objects.get(tipo_lavado=lavado)
-        vehiculo_object = Vehiculo.objects.create(
-            tipo_vehiculo=vehiculo, matricula=matricula, )
+        vehiculo_object = Vehiculo.objects.filter(matricula=matricula)
+        cliente=Cliente.objects.get(usuario=request.user)
+        if not vehiculo_object: 
+            marca = request.POST.get('marca')
+            modelo = request.POST.get('modelo')
+            tipo_vehiculo = request.POST.get('vehiculo')
+            vehiculo_object = Vehiculo.objects.create(
+                matricula=matricula,
+                marca=marca,
+                modelo=modelo,
+                tipo_vehiculo=tipo_vehiculo,
+                cliente=cliente)
+        else:
+            vehiculo_object = vehiculo_object.first()
         turno = Turno.objects.create(
             lavado=lavado_object,
-            cliente__usuario=request.user,
+            cliente=cliente,
             fecha=datetime.strptime(fecha, '%Y-%m-%d-%H:%M'),
             vehiculo=vehiculo_object)
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para ver el perfil de usuario
 # falta implementar como se muestran los valores
-
+#Falta ver que ande el comprobar matricula TO DO
 
 def check_matricula(request):
     if request.is_ajax():
         matricula = request.POST.get('matricula')
-    return HttpResponse()
+        if Vehiculo.objects.filter(matricula=matricula).exists():
+            return HttpResponse("Existe")
+        return HttpResponse("No existe")
 
 
-class MiPerfilView(View):
+'''class MiPerfilView(View):
     template_name = "users/miperfil.html"
 
     def get(self, request, *args, **kwargs):
@@ -132,7 +162,7 @@ class MiPerfilView(View):
         # to do SIEMPRE TIRA USUARIO "MARCO"
 
     def post(self, request, *args, **kwargs):
-        return HttpResponseRedirect(reverse('miperfil'))
+        return HttpResponseRedirect(reverse('miperfil'))'''
 
 # Clase para modificar los turnos
 

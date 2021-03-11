@@ -18,6 +18,6 @@ urlpatterns = [
          name="modificarturno"),
     path('index/', login_required(IndexView.as_view()), name="index"),
     path('check_matricula/',
-         login_required(check_matricula), name="matricula"),
+         login_required(check_matricula), name="check_matricula"),
 
 ]
