@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="shortcut icon" href="favicon.ico">
-<link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
-        <title>Registrarse</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
-    </head>
-    
-    <body>
+{% extends "users/base.html" %}
+{% block content %}
         <nav id="topbar-login">
             <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
             <span id="brillo-total">Brillo Total</span>
@@ -28,14 +16,14 @@
                 <label>Apellido:</label></br>
                 <input type="text" name="apellido" placeholder="apellido" required></br>
                 <label>Teléfono:</label></br>
-                <input type="text" name="telefono" placeholder="teléfono" required></br>
+                <input type="number" name="telefono" placeholder="teléfono" required></br>
                 <label>E-mail:</label></br>
                 <input type="email" name="email" placeholder="e-mail" required>
                 </br>
                 <label>Usuario:</label></br>
                 <input type="text" name="usuario" placeholder="usuario" required></br>
                 <label>Contraseña:</label></br>
-                <input type="password" name="password" placeholder="contraseña" required>
+                <input type="password" name="password" placeholder="contraseña" required minlength="8">
                 </br>
                 <div id="boton">
                     <a class="btn-cancell" href="{% url 'login' %}">Cancelar</a>
@@ -44,13 +32,15 @@
                 
             </div>
         </div>
+
     </body>
+    {% endblock content %} 
+    {% block footer %}
     <footer>
         <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
         </div>
         
     </footer>
-    
-</html>
+    {% endblock footer %}
 
 

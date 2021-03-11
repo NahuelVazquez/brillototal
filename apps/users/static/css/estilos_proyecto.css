@@ -14,7 +14,7 @@ body {
   /* margin: 50px auto; */
   overflow: hidden;
   width: 30%;
-  margin-top: 2%;
+  margin-top: 3%;
   margin-right: auto;
   margin-left: auto;
   /* min-height: 200px; */
@@ -159,6 +159,7 @@ header a:hover {
 #formulario input[type="text"],
 #formulario input[type="email"],
 #formulario input[type="password"],
+#formulario input[type="number"],
 #formulario select,
 #formulario input[type="date"] {
   height: 25px;
@@ -262,6 +263,7 @@ header a:hover {
 #formulario input[type="text"]:hover,
 #formulario input[type="email"]:hover,
 #formulario input[type="password"]:hover,
+#formulario input[type="number"]:hover,
 #formulario select:hover,
 #formulario input[type="date"]:hover {
   width: 98%;
@@ -270,7 +272,19 @@ header a:hover {
 #formulario input[type="date"]:disabled:hover {
   box-shadow: none;
 }
-
+#solo-login {
+  background-color: rgb(58, 58, 58);
+  color: whitesmoke;
+  width: 90%;
+  height: 70px;
+  text-align: center;
+  margin-top: 6%;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
+  position: fixed;
+  left: 5%;
+}
 footer {
   background-color: rgb(58, 58, 58);
   color: whitesmoke;
@@ -280,7 +294,11 @@ footer {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  position: sticky;
+  bottom: 0;
+}
+#usuario {
+  margin-left: 28px;
+  color: rgb(18, 125, 248);
 }
 #atribucion {
   padding-top: 2%;

@@ -1,24 +1,9 @@
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <link rel="shortcut icon" href="favicon.ico">
-<link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Iniciar Sesion</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
-    </head>
-    
-        <body>
+{% extends "users/base.html" %}
+{% block content %}    
             <nav id="topbar-login">
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px; margin-left: 5px;">
                 <span id="brillo-total">Brillo Total</span>
             </nav>  
-            
-                
             <div id="contenedor">
                 
                 <header>
@@ -33,30 +18,20 @@
                     <form method="post">   
                         {% csrf_token %}
                         <label>Usuario:</label></br>
-                        <input type="text" name="username" placeholder="usuario">
+                        <input type="text" name="username" placeholder="usuario" required>
                         </br>
                         <label>Contraseña:</label></br>
-                        <input type="password" name="password" placeholder="contraseña" required>
+                        <input type="password" name="password" placeholder="contraseña" required minlength="8">
                         </br>
                         <div id="boton">
-                    
                             <input class="boton-enviar" type="submit" name="ingresar" value="Ingresar">
                         </div>
                         <div id="registrar">
                             <h3>¿No tenés cuenta?</h3></br>
-                            
                             <a id="boton-registrarse" href="{% url 'registrar' %}">Registrarse</a>
                         </div>
                     </form>
                 </div>
             </div>
-        </body>
-        
-        <footer>
-            <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
-            </div>
-            
-        </footer>
-
-</html>
+        {% endblock content %} 
 

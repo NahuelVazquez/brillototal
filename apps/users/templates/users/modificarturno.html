@@ -1,18 +1,8 @@
-<!DOCTYPE html>
+{% extends "users/base.html" %}
+{% block footer %}
+{% endblock footer %}
+{% block content %}
 
-<html>
-    <head>
-        <link rel="shortcut icon" href="favicon.ico">
-<link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar Turno</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/estilos_proyecto.css" type="text/css">
-    </head>
-    
-    <body>
         <nav id="topbar">
             <div>
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
@@ -26,7 +16,7 @@
                 <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
                 <span ><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
                 <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
-                <span><a href="{% url 'login' %}">Cerrar Sesion</a></span>
+                <span><a href="{% url 'logout' %}">CERRAR SESION</a></span>
             </div>
                         
         </nav> 
@@ -49,7 +39,7 @@
                         <option>Completo</option>
                     </select></br>
                     <label>Matricula:</label></br>
-                    <input type="text" name="matricula" placeholder="matricula" ></br>
+                    <input type="text" name="matricula" placeholder="matricula" required></br>
                     <label>Fecha:</label></br>
                     <input type="date" name="fecha"  disabled>
                     </br>
@@ -65,12 +55,10 @@
                 </form>
             </div>
         </div>
-    </body>
+    {% endblock content %} 
     <footer>
         <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
         </div>
         
     </footer>
-
-</html>
     

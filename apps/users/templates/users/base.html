@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <link rel="shortcut icon" href="favicon.ico">
-<link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
+        <link rel="icon" type="image/gif" href="../static/imagenes/animated_favicon1.gif">
         <title>Inicio</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,34 +13,11 @@
     </head>
     {% endblock header %}
     <body>
-        {% block menu %}
-        <nav id="topbar">
-            <!-- <div>
-                {{ user.username }}
-            </div> -->
-            <div id="index-logos">
-                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
-            
-                <span id="brillo-total">Brillo Total</span>
-            </div>
-            
-            <div id="menu">
-                <span><a href="{% url 'index' %}">INICIO</a></span>
-                {% if user %}
-                <span><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
-                <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
-                <span class="activo"><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
-                <span><a href="{% url 'logout' %}">Cerrar Sesion</a></span>
-                {% endif %}
-            </div>
-                        
-        </nav> 
-        {% endblock menu %}
         {% block content %}
         {% endblock content %}
     </body>
     {% block footer %}
-    <footer>
+    <footer id="solo-login">
         <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
         </div>       
     </footer>

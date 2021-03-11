@@ -104,9 +104,6 @@ class SolicitarTurnoView(View):
         matricula = request.POST.get('matricula')
         fecha = request.POST.get('fecha')+'-'+request.POST.get('horario')
         horario = request.POST.get('horario')
-        import pdb
-        pdb.set_trace()
-
         lavado_object = Lavado.objects.get(tipo_lavado=lavado)
         vehiculo_object = Vehiculo.objects.create(
             tipo_vehiculo=vehiculo, matricula=matricula, )

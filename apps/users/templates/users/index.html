@@ -1,31 +1,25 @@
 {% extends "users/base.html" %}
-{% block menu %}
-{% endblock menu %}
 {% block content %}
         <nav id="topbar">
             <div id="index-logos">
-                {{ user.username }} 
-                <!-- no muestra -->
-            
                 <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px; margin-left:5px;">
-            
                 <span id="brillo-total">Brillo Total</span>
-            </div>
-            
+                <div id="usuario">
+                    {{ user }}
+                </div>
+            </div>      
             <div id="miperfil">
                 <a href="{% url 'miperfil' %}">MI PERFIL</a>
-                <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                <a href="{% url 'logout' %}">CERRAR SESION</a>
             </div>
         </nav> 
-
         <div class="contenedor-inicio">
             <a href="{% url 'misturnos' %}" id="misturnos" class="inicio-item">
                 <!-- <div id="misturnos" class="inicio-item"> -->
                     <div>
                         <img src="../static/imagenes/impatient (1).png" style="width: 200px;">
                         <h3>MIS TURNOS</h3>
-                    </div>
-                    
+                    </div>              
                 <!-- </div> -->
             </a>
             <a href="{% url 'solicitarturno' %}"  class="inicio-item">
@@ -38,5 +32,3 @@
             </a>
         </div>
         {% endblock content %}     
-
-</html>

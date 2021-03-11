@@ -1,10 +1,13 @@
 {% extends "users/base.html" %}
 {% block content %}
+<nav id="topbar-login">
+    <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px; margin-left: 5px;">
+    <span id="brillo-total">Brillo Total</span>
+</nav>  
 <div id="contenedor-registro">
     <header>
         <h3>Mis datos</h3>
         <a>Eliminar cuenta</a>
-        
      </header>
     <div id="formulario">
     <form method="POST">
@@ -12,7 +15,7 @@
         <label>Nombre y Apellido:</label></br>
         <input type="text" name="nombre" placeholder="nombre y apellido" required></br>
         <label>Teléfono:</label></br>
-        <input type="text" name="telefono" placeholder="teléfono" required></br>
+        <input type="number" name="telefono" placeholder="teléfono" required></br>
         <label>E-mail:</label></br>
         <input type="email" name="email" placeholder="e-mail" required>
         </br>
@@ -21,7 +24,7 @@
         </br>
         <div id="boton">
             <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
-            <input class="boton-enviar" type="submit" name="ingresar" value="Modificar">
+            <input class="boton-enviar" type="submit" name="ingresar" value="Guardar Cambios">
         </div>
         
     </form>
