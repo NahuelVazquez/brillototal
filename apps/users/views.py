@@ -12,6 +12,8 @@ from apps.users.models import *
 LONG_PASS = 8
 
 # Clase para el login
+
+
 class LoginView(View):
 
     template_name = "users/login.html"
@@ -35,7 +37,9 @@ class LoginView(View):
 
         return render(request, self.template_name, context={'error': 'USER Y/O PASSWORD INCORRECTO'})
 
-#Administra el logout
+# Administra el logout
+
+
 class LogOutView(View):
 
     def get(self, request, *args, **kwargs):
@@ -65,68 +69,72 @@ class RegistrarView(View):
         request.user = user
         return HttpResponseRedirect(reverse('index'))
 
-#Muestra el perfil de usuario y permite modificar datos
+# Muestra el perfil de usuario y permite modificar datos
+
+
 class MiPerfilView(View):
 
     template_name = "users/miperfil.html"
-    
 
     def get(self, request, *args, **kwargs):
         cliente = Cliente.objects.get(usuario=request.user)
-        return render(request, self.template_name, 
+        return render(request, self.template_name,
                       context={'user': request.user, 'telefono': cliente.telefono})
 
-    def post(self, request, *args, **kwargs): 
+    def post(self, request, *args, **kwargs):
         try:
             cliente = Cliente.objects.get(usuario=request.user)
             first_name = request.POST.get('nombre')
-            
+
             if first_name:
-                request.user.first_name=first_name
+                request.user.first_name = first_name
             second_name = request.POST.get('apellido')
             if second_name:
-                request.user.second_name=second_name
+                request.user.second_name = second_name
             email = request.POST.get('email')
             if email:
-                request.user.email=email
+                request.user.email = email
             telefono = request.POST.get('telefono')
             if telefono:
-                cliente.telefono=telefono
+                cliente.telefono = telefono
             password = request.POST.get('password')
             if password:
                 request.user.set_password(password)
             request.user.save()
             cliente.save()
-        
+
         except Exception as e:
-            return render(request, self.template_name, 
+            return render(request, self.template_name,
                           context={'user': request.user, 'telefono': cliente.telefono, 'error': str(e)})
-        
+
         return HttpResponseRedirect(reverse('index'))
 
-    #AQUI CAMBIE COSAS
+    # AQUI CAMBIE COSAS
     def delete(self, request, usuario):
         usuario.delete()
-        return render(request, self.template_name, {'user':usuario})
+        return render(request, self.template_name, {'user': usuario})
 
 # Clase para visualizar los turnos
+
+
 class MisTurnosView(View):
 
     template_name = "users/misturnos.html"
-    
-    
+
     def get(self, request, *args, **kwargs):
         fecha = request.POST.get('fecha')
-        turnos = Turno.objects.filter(cliente__usuario=request.user).order_by("-fecha")
-        
+        turnos = Turno.objects.filter(
+            cliente__usuario=request.user).order_by("-fecha")
+
         return render(request, self.template_name,
                       context={'user': request.user.username, 'turnos': turnos})
-       
 
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('modificarturno'))
 
 # Clase para solicitar un nuevo turno
+
+
 class SolicitarTurnoView(View):
 
     template_name = "users/solicitarturno.html"
@@ -137,7 +145,6 @@ class SolicitarTurnoView(View):
                       context={'user': request.user.username, 'tipos_de_lavados': TIPO_LAVADO,
                                'tipo_de_vehiculos': TIPO_VEHICULO})
 
-    
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         lavado = request.POST.get('lavado')
@@ -146,8 +153,8 @@ class SolicitarTurnoView(View):
         horario = request.POST.get('horario')
         lavado_object = Lavado.objects.get(tipo_lavado=lavado)
         vehiculo_object = Vehiculo.objects.filter(matricula=matricula)
-        cliente=Cliente.objects.get(usuario=request.user)
-        if not vehiculo_object: 
+        cliente = Cliente.objects.get(usuario=request.user)
+        if not vehiculo_object:
             marca = request.POST.get('marca')
             modelo = request.POST.get('modelo')
             tipo_vehiculo = request.POST.get('vehiculo')
@@ -167,6 +174,8 @@ class SolicitarTurnoView(View):
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para ver el perfil de usuario
+
+
 @csrf_exempt
 def check_matricula(request):
     if request.is_ajax():
@@ -182,7 +191,7 @@ class ModificarTurnoView(View):
     template_name = "users/modificarturno.html"
 
     def get(self, request, *args, **kwargs):
-        turno = Turno.objects.get(id=kwargs.pop('id'))
+        turno = Turno.objects.get(id=kwargs.get('id'))
         return render(request, self.template_name,
                       context={'user': request.user.username, 'tipos_de_lavados': TIPO_LAVADO,
                                'tipo_de_vehiculos': TIPO_VEHICULO, 'turno': turno})
@@ -192,22 +201,44 @@ class ModificarTurnoView(View):
         lavado = request.POST.get('lavado')
         matricula = request.POST.get('matricula')
         fecha = request.POST.get('fecha')+'-'+request.POST.get('horario')
-        horario = request.POST.get('horario')
         lavado_object = Lavado.objects.get(tipo_lavado=lavado)
+        cliente = Cliente.objects.get(usuario=request.user)
+
         vehiculo_object = Vehiculo.objects.filter(matricula=matricula)
-        cliente=Cliente.objects.get(usuario=request.user)
-        vehiculo_object = vehiculo_object.first()
-        
-        
-        turno = Turno.objects.update(
-            lavado=lavado_object,
-            cliente=cliente,
-            fecha=datetime.strptime(fecha, '%Y-%m-%d-%H:%M'),
-            vehiculo=vehiculo_object)
-        
+        if not vehiculo_object:
+            marca = request.POST.get('marca')
+            modelo = request.POST.get('modelo')
+            tipo_vehiculo = request.POST.get('vehiculo')
+            vehiculo_object = Vehiculo.objects.create(
+                matricula=matricula,
+                marca=marca,
+                modelo=modelo,
+                tipo_vehiculo=tipo_vehiculo,
+                cliente=cliente)
+        else:
+            vehiculo_object = vehiculo_object.first()
+            tipo_vehiculo = request.POST.get('vehiculo')
+            marca = request.POST.get('marca')
+            modelo = request.POST.get('modelo')
+            if tipo_vehiculo:
+                vehiculo_object.tipo_vehiculo = tipo_vehiculo
+            if marca:
+                vehiculo_object.marca = marca
+            if modelo:
+                vehiculo_object.modelo = modelo
+            vehiculo_object.save()
+
+        turno = Turno.objects.get(id=request.POST.get('id'))
+        turno.lavado = lavado_object
+        turno.fecha = datetime.strptime(fecha, '%Y-%m-%d-%H:%M')
+        turno.vehiculo = vehiculo_object
+        turno.save()
+
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para visualizar los turnos
+
+
 class IndexView(View):
 
     template_name = "users/index.html"
@@ -219,7 +250,8 @@ class IndexView(View):
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('index'))
 
-#Falta Implementar clase que permite eliminar un turno
+# Falta Implementar clase que permite eliminar un turno
+
+
 class EliminarTurnoView(View):
     pass
-

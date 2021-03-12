@@ -46,7 +46,7 @@
                     <th>Lavado</th>
                     <th>Patente</th>
                     <th>Fecha</th>
-                    <th class="botones-turno">Cancelar/Modificar</th>
+                    <th class="botones-turno">Eliminar/Modificar</th>
                 </tr>
                 {% for turno in turnos %}
                 <tr>
@@ -54,9 +54,10 @@
                     <td>{{ turno.lavado.tipo_lavado }}</td>
                     <td>{{ turno.vehiculo.matricula }}</td>
                     <td>{{ turno.fecha }}</td>
+                    <td>{{ turno.id }}</td>
                     <td id="opciones-turno">
                         <button class="cancel-edit" type="submit"><span class="icon-bin"></span></button>
-                        <a href="{% url 'modificarturno' id=turno.id %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
+                        <a href="{% url 'modificarturno' turno.id %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
                     </td>    
                 </tr>
                 {% endfor %}

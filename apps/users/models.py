@@ -42,11 +42,17 @@ class Vehiculo(models.Model):
     modelo = models.CharField(max_length=20)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.matricula} - {self.marca} - {self.modelo} - {self.cliente} - {self.tipo_vehiculo}"
+
 
 class Turno(models.Model):
-   
+
     fecha = models.DateTimeField(default=None)
     lavado = models.ForeignKey(Lavado, on_delete=models.CASCADE)
     vehiculo = models.ForeignKey(
         Vehiculo, on_delete=models.CASCADE, null=False, blank=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.fecha} || {self.vehiculo} || {self.lavado}"

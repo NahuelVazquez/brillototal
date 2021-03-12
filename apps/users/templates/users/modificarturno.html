@@ -1,11 +1,9 @@
 {% extends "users/base.html" %}
-{% block footer %}
-{% endblock footer %}
 {% block content %}
 
 <nav id="topbar">
     <div id="index-logos">
-        <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">          
+        <img  src="../../static/imagenes/auto-limpio (1).png" style="width: 60px;">          
         <span id="brillo-total">Brillo Total</span>
         <div id="usuario">
             {{ user }}
@@ -14,7 +12,7 @@
     <div id="menu">
         <span><a href="{% url 'index' %}">INICIO</a></span>
         <span><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
-        <span class="activo"><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+        <span><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
         <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
         <span><a href="{% url 'logout' %}">CERRAR SESION</a></span>
     </div>                     
@@ -33,7 +31,7 @@
             </select></br>
             <label>Matricula:</label></br>
             <input type="text" name="matricula" id="matricula" placeholder="matricula" required onblur="comprobarMatricula()"></br>
-            
+            <input type="text" name="id" id="id" value="{{ turno.id }}" style="display:none" >
             <div class="ocultar"  style="display:none">
             <label>Tipo de Vehiculo:</label></br>
             <select name="vehiculo">
@@ -43,10 +41,10 @@
                 {% endfor %}
             </select></br>
             <label>Marca:</label></br>
-            <input type="text" name="marca" placeholder="marca" required>
+            <input type="text" name="marca" placeholder="marca">
             </br>
             <label>Modelo:</label></br>
-            <input type="text" name="modelo" placeholder="modelo"  required>
+            <input type="text" name="modelo" placeholder="modelo" >
             </br>
 
             </div>
@@ -67,22 +65,23 @@
     </div>
 </div>
 <script type="text/javascript"> 
-function comprobarMatricula() {
-    $.ajax({
-        method: "POST",
-        url: "{% url 'check_matricula' %}",
-        data: {matricula: $('#matricula').val()}
-        }).done(function(response) {
-            if (response=="No existe"){
-                $(".ocultar").show("slow")
+    function comprobarMatricula() {
+        var data = {matricula: $('#matricula').val()}
+        $.ajax({
+            url : "{% url 'check_matricula' %}",
+            type: "POST",
+            data : data,
+            success: function(data, textStatus, jqXHR)
+            {
+                if (data=="No existe"){
+                    $(".ocultar").show("slow")
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+         
             }
-    });
-}
-</script>
+        });
+    }
+    </script>
 {% endblock content %}
-    <footer>
-        <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
-        </div>
-        
-    </footer>
-    
