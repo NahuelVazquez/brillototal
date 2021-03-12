@@ -176,16 +176,6 @@ def check_matricula(request):
         return HttpResponse("No existe")
 
 
-'''class MiPerfilView(View):
-    template_name = "users/miperfil.html"
-
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'user': request.user.username})
-        # to do SIEMPRE TIRA USUARIO "MARCO"
-
-    def post(self, request, *args, **kwargs):
-        return HttpResponseRedirect(reverse('miperfil'))'''
-
 # Clase para modificar los turnos
 class ModificarTurnoView(View):
 
