@@ -47,13 +47,14 @@
                     </br>
 
                     </div>
+                    
                     <label>Fecha:</label></br>
-                    <input type="date" name="fecha"  required>
+                    <input type="date" name="fecha" required >
                     </br>
                     <label>Horario:</label></br>
                     <input type="time" name="horario">
                     </br>
-
+                    
                     <div id="boton">
                         <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
                         <input class="boton-enviar" type="submit" name="turno" value="Aceptar">
@@ -64,14 +65,21 @@
         </div>
         <script type="text/javascript"> 
         function comprobarMatricula() {
+            var data = {matricula: $('#matricula').val()}
             $.ajax({
-                method: "POST",
-                url: "{% url 'check_matricula' %}",
-                data: {matricula: $('#matricula').val()}
-                }).done(function(response) {
-                    if (response=="No existe"){
+                url : "{% url 'check_matricula' %}",
+                type: "POST",
+                data : data,
+                success: function(data, textStatus, jqXHR)
+                {
+                    if (data=="No existe"){
                         $(".ocultar").show("slow")
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+             
+                }
             });
         }
         </script>

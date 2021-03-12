@@ -10,18 +10,24 @@
         <a>Eliminar cuenta</a>
      </header>
     <div id="formulario">
+        {% if error %} 
+            <p style="color:red">{{error}}</p>
+        {% endif %}
     <form method="POST">
         {% csrf_token %}
-        <label>Nombre y Apellido:</label></br>
-        <input type="text" name="nombre" placeholder="nombre y apellido" required></br>
-        <label>Teléfono:</label></br>
-        <input type="number" name="telefono" placeholder="teléfono" required></br>
-        <label>E-mail:</label></br>
-        <input type="email" name="email" placeholder="e-mail" required>
-        </br>
-        <label>Nueva contraseña:</label></br>
-        <input type="password" name="password" placeholder="contraseña" required>
-        </br>
+            <label>Nombre:</label></br>
+            <input type="text" name="nombre" value="{{ user.first_name }}" placeholder="nombre" ></br>
+            <label>Apellido:</label></br>
+            <input type="text" name="apellido" value="{{ user.last_name }}" placeholder="apellido"></br>
+            <label>Teléfono:</label></br>
+            <input type="number" name="telefono" value="{{ telefono }}" placeholder="teléfono"></br>
+            <label>E-mail:</label></br>
+            <input type="email" name="email" value="{{ user.email }}" placeholder="e-mail">
+            </br>
+            <label>Usuario:</label></br>
+            <input type="text" name="usuario" value="{{ user.username }}" placeholder="usuario" readonly></br>
+            <label>Contraseña:</label></br>
+            <input type="password" name="password" placeholder="contraseña" minlength="8">
         <div id="boton">
             <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
             <input class="boton-enviar" type="submit" name="ingresar" value="Guardar Cambios">

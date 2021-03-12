@@ -16,8 +16,10 @@ urlpatterns = [
     path('miperfil/', login_required(MiPerfilView.as_view()), name='miperfil'),
     path('modificarturno/', login_required(ModificarTurnoView.as_view()),
          name="modificarturno"),
+    path('modificarturno/<id>/', login_required(ModificarTurnoView.as_view()), name='modificarturno'),
     path('index/', login_required(IndexView.as_view()), name="index"),
     path('check_matricula/',
          login_required(check_matricula), name="check_matricula"),
+
 
 ]

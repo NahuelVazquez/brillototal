@@ -3,59 +3,83 @@
 {% endblock footer %}
 {% block content %}
 
-        <nav id="topbar">
-            <div>
-                <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">
-            </div>
-            <div>
-                <span id="brillo-total">Brillo Total</span>
+<nav id="topbar">
+    <div id="index-logos">
+        <img  src="../static/imagenes/auto-limpio (1).png" style="width: 60px;">          
+        <span id="brillo-total">Brillo Total</span>
+        <div id="usuario">
+            {{ user }}
+        </div>
+    </div>         
+    <div id="menu">
+        <span><a href="{% url 'index' %}">INICIO</a></span>
+        <span><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
+        <span class="activo"><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
+        <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
+        <span><a href="{% url 'logout' %}">CERRAR SESION</a></span>
+    </div>                     
+</nav> 
+<div id="contenedor-registro">
+    <div id="formulario">
+        <h3>Modificar turno: </h3>
+        <form method="POST">
+            {% csrf_token %}
+            <label>Tipo de Lavado</label></br>
+            <select name="lavado">
+                <option selected disabled>Seleccione tipo de lavado</option>
+                {% for key, value in tipos_de_lavados %}
+                <option value={{key}}>{{value}}</option>
+                {% endfor %}
+            </select></br>
+            <label>Matricula:</label></br>
+            <input type="text" name="matricula" id="matricula" placeholder="matricula" required onblur="comprobarMatricula()"></br>
+            
+            <div class="ocultar"  style="display:none">
+            <label>Tipo de Vehiculo:</label></br>
+            <select name="vehiculo">
+                <option selected disabled>Seleccione tipo de vehiculo</option>
+                {% for key, value in tipo_de_vehiculos %}
+                <option value={{key}}>{{value}}</option>
+                {% endfor %}
+            </select></br>
+            <label>Marca:</label></br>
+            <input type="text" name="marca" placeholder="marca" required>
+            </br>
+            <label>Modelo:</label></br>
+            <input type="text" name="modelo" placeholder="modelo"  required>
+            </br>
+
             </div>
             
-            <div id="menu">
-                <span><a href="{% url 'index' %}">INICIO</a></span>
-                <span class="activo"><a href="{% url 'misturnos' %}">MIS TURNOS</a></span>
-                <span ><a href="{% url 'solicitarturno' %}">SOLICITAR TURNO</a></span>
-                <span><a href="{% url 'miperfil' %}">MI PERFIL</a></span>
-                <span><a href="{% url 'logout' %}">CERRAR SESION</a></span>
+            <label>Fecha:</label></br>
+            <input type="date" name="fecha" required >
+            </br>
+            <label>Horario:</label></br>
+            <input type="time" name="horario">
+            </br>
+            
+            <div id="boton">
+                <a class="btn-cancell" href="{% url 'index' %}">Cancelar</a>
+                <input class="boton-enviar" type="submit" name="turno" value="Aceptar">
             </div>
-                        
-        </nav> 
-        <div id="contenedor-registro">
-            <div id="formulario">
-                <h3>Modificar turno: </h3>
-                <form>
-                    <label>Tipo de Vehiculo:</label></br>
-                    <select>
-                        <option selected disabled>Seleccione tipo de vehiculo</option>
-                        <option>Auto</option>
-                        <option>Camioneta</option>
-                        <option>Moto</option>
-                    </select></br>
-                    <label>Tipo de Lavado</label></br>
-                    <select name="lavado">
-                        <option selected disabled>Seleccione tipo de lavado</option>
-                        <option>Interior</option>
-                        <option>Exterior</option>
-                        <option>Completo</option>
-                    </select></br>
-                    <label>Matricula:</label></br>
-                    <input type="text" name="matricula" placeholder="matricula" required></br>
-                    <label>Fecha:</label></br>
-                    <input type="date" name="fecha"  disabled>
-                    </br>
-                    <label>Horario:</label></br>
-                    <input disabled>
-                    </br>
-
-                    <div id="boton">
-                        <a class="btn-cancell" href="{% url 'misturnos' %}">Cancelar</a>
-                        <input class="boton-enviar" type="submit" name="turno" value="Aceptar">
-                    </div>
-                    
-                </form>
-            </div>
-        </div>
-    {% endblock content %} 
+            
+        </form>
+    </div>
+</div>
+<script type="text/javascript"> 
+function comprobarMatricula() {
+    $.ajax({
+        method: "POST",
+        url: "{% url 'check_matricula' %}",
+        data: {matricula: $('#matricula').val()}
+        }).done(function(response) {
+            if (response=="No existe"){
+                $(".ocultar").show("slow")
+            }
+    });
+}
+</script>
+{% endblock content %}
     <footer>
         <div id="atribucion" style="font-size: 12px">2021 - Informatorio - Comisión 3 - Grupo 1 - Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
         </div>

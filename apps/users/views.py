@@ -4,8 +4,9 @@ from django.shortcuts import render, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
-from apps.users.models import *
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from apps.users.models import *
 
 
 # Clase para el login
@@ -73,15 +74,41 @@ class MiPerfilView(View):
     
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'user': request.user.username})
+        cliente = Cliente.objects.get(usuario=request.user)
+        return render(request, self.template_name, 
+                      context={'user': request.user, 'telefono': cliente.telefono})
 
     def post(self, request, *args, **kwargs): 
-        usuario = request.POST.get('usuario')
-        usuario = User.objets.get(user=request.user)
+        try:
+            cliente = Cliente.objects.get(usuario=request.user)
+            first_name = request.POST.get('nombre')
+            
+            if first_name:
+                request.user.first_name=first_name
+            second_name = request.POST.get('apellido')
+            if second_name:
+                request.user.second_name=second_name
+            email = request.POST.get('email')
+            if email:
+                request.user.email=email
+            telefono = request.POST.get('telefono')
+            if telefono:
+                cliente.telefono=telefono
+            password = request.POST.get('password')
+            if password:
+                request.user.set_password(password)
+            request.user.save()
+            cliente.save()
+        
+        except Exception as e:
+            return render(request, self.template_name, 
+                          context={'user': request.user, 'telefono': cliente.telefono, 'error': str(e)})
+        
         return HttpResponseRedirect(reverse('index'))
 
-    def delete(request, usuario):
-        user.delete()
+    #AQUI CAMBIE COSAS
+    def delete(self, request, usuario):
+        usuario.delete()
         return render(request, self.template_name, {'user':usuario})
 
 # Clase para visualizar los turnos
@@ -90,12 +117,15 @@ class MiPerfilView(View):
 class MisTurnosView(View):
 
     template_name = "users/misturnos.html"
-
+    
+    
     def get(self, request, *args, **kwargs):
-        turnos = Turno.objects.filter(cliente__usuario=request.user)
+        fecha = request.POST.get('fecha')
+        turnos = Turno.objects.filter(cliente__usuario=request.user).order_by("-fecha")
+        
         return render(request, self.template_name,
                       context={'user': request.user.username, 'turnos': turnos})
-        # to do SIEMPRE TIRA USUARIO "MARCO"
+       
 
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('modificarturno'))
@@ -146,6 +176,7 @@ class SolicitarTurnoView(View):
 # falta implementar como se muestran los valores
 #Falta ver que ande el comprobar matricula TO DO
 
+@csrf_exempt
 def check_matricula(request):
     if request.is_ajax():
         matricula = request.POST.get('matricula')
@@ -172,16 +203,29 @@ class ModificarTurnoView(View):
     template_name = "users/modificarturno.html"
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'user': request.user.username})
+        turno = Turno.objects.get(id=kwargs.pop('id'))
+        return render(request, self.template_name,
+                      context={'user': request.user.username, 'tipos_de_lavados': TIPO_LAVADO,
+                               'tipo_de_vehiculos': TIPO_VEHICULO, 'turno': turno})
 
-    # FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
-    @ transaction.atomic
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
-        vehiculo = request.POST.get('vehiculo')
         lavado = request.POST.get('lavado')
         matricula = request.POST.get('matricula')
-        fecha = request.POST.get('fecha')
+        fecha = request.POST.get('fecha')+'-'+request.POST.get('horario')
         horario = request.POST.get('horario')
+        lavado_object = Lavado.objects.get(tipo_lavado=lavado)
+        vehiculo_object = Vehiculo.objects.filter(matricula=matricula)
+        cliente=Cliente.objects.get(usuario=request.user)
+        vehiculo_object = vehiculo_object.first()
+        
+        #Actualiza turno // PERO EN REALIDAD TOMA TODOS LOS TURNOS
+        turno = Turno.objects.update(
+            lavado=lavado_object,
+            cliente=cliente,
+            fecha=datetime.strptime(fecha, '%Y-%m-%d-%H:%M'),
+            vehiculo=vehiculo_object)
+        
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para visualizar los turnos
@@ -197,3 +241,8 @@ class IndexView(View):
 
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('index'))
+
+#Implementar clase que permite eliminar un turno
+class EliminarTurnoView(View):
+    pass
+

@@ -58,7 +58,7 @@
                     <td>{{ turno.horario }}</td>
                     <td id="opciones-turno">
                         <button class="cancel-edit" type="submit"><span class="icon-bin"></span></button>
-                        <a href="{% url 'modificarturno' %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
+                        <a href="{% url 'modificarturno' id=turno.id %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
                     </td>    
                 </tr>
                 {% endfor %}

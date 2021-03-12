@@ -44,9 +44,9 @@ class Vehiculo(models.Model):
 
 
 class Turno(models.Model):
-    # AQUI DEBERIA ELEGIR EL USUARIO DIA Y HORA (Lun a sabado // 8 a 19 hs // 1 hora por turno.)
+   
     fecha = models.DateTimeField(default=None)
     lavado = models.ForeignKey(Lavado, on_delete=models.CASCADE)
     vehiculo = models.ForeignKey(
-        Vehiculo, on_delete=models.CASCADE, null=True, blank=True)
+        Vehiculo, on_delete=models.CASCADE, null=False, blank=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
