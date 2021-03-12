@@ -9,10 +9,9 @@ from datetime import datetime
 from apps.users.models import *
 
 
-# Clase para el login
 LONG_PASS = 8
 
-
+# Clase para el login
 class LoginView(View):
 
     template_name = "users/login.html"
@@ -36,7 +35,7 @@ class LoginView(View):
 
         return render(request, self.template_name, context={'error': 'USER Y/O PASSWORD INCORRECTO'})
 
-
+#Administra el logout
 class LogOutView(View):
 
     def get(self, request, *args, **kwargs):
@@ -44,9 +43,7 @@ class LogOutView(View):
         return HttpResponseRedirect(reverse('welcome'))
 
 
-# Clase para el registro del usuario
-
-
+# Registro del usuario
 class RegistrarView(View):
 
     template_name = "users/registrar.html"
@@ -68,6 +65,7 @@ class RegistrarView(View):
         request.user = user
         return HttpResponseRedirect(reverse('index'))
 
+#Muestra el perfil de usuario y permite modificar datos
 class MiPerfilView(View):
 
     template_name = "users/miperfil.html"
@@ -112,8 +110,6 @@ class MiPerfilView(View):
         return render(request, self.template_name, {'user':usuario})
 
 # Clase para visualizar los turnos
-
-
 class MisTurnosView(View):
 
     template_name = "users/misturnos.html"
@@ -131,8 +127,6 @@ class MisTurnosView(View):
         return HttpResponseRedirect(reverse('modificarturno'))
 
 # Clase para solicitar un nuevo turno
-
-
 class SolicitarTurnoView(View):
 
     template_name = "users/solicitarturno.html"
@@ -143,7 +137,7 @@ class SolicitarTurnoView(View):
                       context={'user': request.user.username, 'tipos_de_lavados': TIPO_LAVADO,
                                'tipo_de_vehiculos': TIPO_VEHICULO})
 
-    # FALTA DEFINIR VALORES INGRESADOS EN VARIABLES
+    
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         lavado = request.POST.get('lavado')
@@ -173,9 +167,6 @@ class SolicitarTurnoView(View):
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para ver el perfil de usuario
-# falta implementar como se muestran los valores
-#Falta ver que ande el comprobar matricula TO DO
-
 @csrf_exempt
 def check_matricula(request):
     if request.is_ajax():
@@ -196,8 +187,6 @@ def check_matricula(request):
         return HttpResponseRedirect(reverse('miperfil'))'''
 
 # Clase para modificar los turnos
-
-
 class ModificarTurnoView(View):
 
     template_name = "users/modificarturno.html"
@@ -219,7 +208,7 @@ class ModificarTurnoView(View):
         cliente=Cliente.objects.get(usuario=request.user)
         vehiculo_object = vehiculo_object.first()
         
-        #Actualiza turno // PERO EN REALIDAD TOMA TODOS LOS TURNOS
+        
         turno = Turno.objects.update(
             lavado=lavado_object,
             cliente=cliente,
@@ -229,8 +218,6 @@ class ModificarTurnoView(View):
         return HttpResponseRedirect(reverse('misturnos'))
 
 # Clase para visualizar los turnos
-
-
 class IndexView(View):
 
     template_name = "users/index.html"
@@ -242,7 +229,7 @@ class IndexView(View):
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('index'))
 
-#Implementar clase que permite eliminar un turno
+#Falta Implementar clase que permite eliminar un turno
 class EliminarTurnoView(View):
     pass
 

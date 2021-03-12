@@ -46,7 +46,6 @@
                     <th>Lavado</th>
                     <th>Patente</th>
                     <th>Fecha</th>
-                    <th>Horario</th>
                     <th class="botones-turno">Cancelar/Modificar</th>
                 </tr>
                 {% for turno in turnos %}
@@ -55,7 +54,6 @@
                     <td>{{ turno.lavado.tipo_lavado }}</td>
                     <td>{{ turno.vehiculo.matricula }}</td>
                     <td>{{ turno.fecha }}</td>
-                    <td>{{ turno.horario }}</td>
                     <td id="opciones-turno">
                         <button class="cancel-edit" type="submit"><span class="icon-bin"></span></button>
                         <a href="{% url 'modificarturno' id=turno.id %}"><button class="cancel-edit"><span class="icon-pen"></span></button></a>
